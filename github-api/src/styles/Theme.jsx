@@ -45,6 +45,8 @@ export const theme = {
     mono: ["IBM Plex Mono", "serif"].join(","),
   },
   fontSize: {
+    title: '1.3rem',
+    subtitle: '1.25rem',
     xs: rem(10),
     sm: rem(12),
     md: rem(14),
