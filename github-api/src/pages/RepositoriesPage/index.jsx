@@ -1,75 +1,37 @@
-import React, {useState} from "react";
-import { Container, Sidebar, Main } from "./styles";
+import React, {useEffect, useState} from "react";
+import { Container, Sidebar, Main, Load } from "./styles";
 import Profile from "./Profile";
 import Filter from "./Filter";
 import Repositories from "./Repositories";
-import { getLangsFrom } from "../../services/api";
+import { getLangsFrom, getUser, getRepos } from "../../services/api";
 
 function RepositoriesPage() {
-
+  const [repos, setRepos] = useState('');
+  const [user, setUser] = useState('');
+  const [languages, setLanguages] = useState('');
   const [currentLang, setCurrentLang] = useState('');
+  const [load, setLoad] = useState(true);
 
-  const user = {
-    login: "Voigtuwu",
-    name: "Lucas Voigt",
-    avatar_url: "https://avatars.githubusercontent.com/u/87502643?v=4",
-    followers: 0,
-    following: 0,
-    company: null,
-    blog: "",
-    location: "Petrópolis - RJ",
-  };
+  useEffect(() => {
+    const loadData = async () => {
+      const [userResponse, reposResponse] = await Promise.all([getUser('Voigtuwu'), getRepos('Voigtuwu')]);
 
-  const repositories = [
-    {
-      id: '1',
-      name: "Repo 1",
-      description: "Descricao",
-      html_url: "https://github.com/Voigtuwu/Git-API",
-      language: "Java",
-    },
-    {
-      id: '2',
-      name: "Repo 2",
-      description: "Descricao",
-      html_url: "https://github.com/Voigtuwu/Git-API",
-      language: "JavaScript",
-    },
-    {
-      id: '3',
-      name: "Repo 3",
-      description: "Descricao",
-      html_url: "https://github.com/Voigtuwu/Git-API",
-      language: "Typescript",
-    },
-    {
-      id: '4',
-      name: "Repo 4",
-      description: "Descricao",
-      html_url: "https://github.com/Voigtuwu/Git-API",
-      language: "Python",
-    },
-    {
-      id: '5',
-      name: "Repo 5",
-      description: "Descricao",
-      html_url: "https://github.com/Voigtuwu/Git-API",
-      language: "PHP",
-    },
-    {
-      id: '6',
-      name: "Repo 6",
-      description: "Descricao",
-      html_url: "https://github.com/Voigtuwu/Git-API",
-      language: "Java",
-    },
-  ];
+      setUser(userResponse.data);
+      setRepos(reposResponse.data);
+      setLanguages(getLangsFrom(reposResponse.data));
+      setLoad(false);
+    }
+    loadData();
+  }, []);
 
-  const languages = getLangsFrom(repositories);
 
   const onFilterClick = (language) => {
     setCurrentLang(language);
   };
+
+  if(load){
+    return <Load>Carregando, aguarde um momento.</Load>
+  }
 
   return (
     <Container>
@@ -83,7 +45,7 @@ function RepositoriesPage() {
       </Sidebar>
       <Main>
         <Repositories
-        repositories={repositories} 
+        repositories={repos} 
         currentLang={currentLang}
         />
       </Main>

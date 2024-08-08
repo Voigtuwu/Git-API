@@ -25,7 +25,8 @@
     "lint": "eslint src/**/*.{js,jsx}",
     "lint:fix": "eslint --fix src/**/*.{js,jsx,}",
     "format": "prettier --write src/**/*.{js,jsx,} --config .prettierrc.json",
-    "json-server": "json-server --watch db.json --port 5000"
+    "json-server": "json-server --watch db.json --routes routes.json --id login --port 5000",
+    "dev": "concurrently \"npm run json-server\" \"npm start\""
   },
   "eslintConfig": {
     "extends": [
@@ -47,6 +48,7 @@
   },
   "devDependencies": {
     "@babel/plugin-transform-private-property-in-object": "^7.24.7",
+    "concurrently": "^8.2.2",
     "eslint": "^8.57.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.10.0",
