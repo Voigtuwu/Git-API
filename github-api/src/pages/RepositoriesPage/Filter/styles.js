@@ -27,6 +27,7 @@ export const Selector = styled.button`
   border-bottom-right-radius: 20px;
   transition: background 0.3s, transform 0.3s;
   padding: 0 1rem;
+  cursor: pointer;
 
   &:hover,
   &.selected {
@@ -51,6 +52,8 @@ export const Cleaner = styled.button`
     border: none;
     text-align: left;
     padding: 1rem;
+    cursor: pointer;
+    width: 53px;
 
     &:hover {
         color: rgba(255, 255, 255, 0.5)

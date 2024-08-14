@@ -10,7 +10,8 @@ function Repositories({ repositories, currentLang }) {
         currentLang === undefined || repository.language === currentLang
     )
     .map((repository) => (
-      <Repository key={repository.id} repository={repository} />
+      <Repository key={repository.id.toString()} repository={{ ...repository, id: repository.id.toString() }} />
+
     ));
   return <Container>{repo}</Container>;
 }
@@ -22,7 +23,7 @@ Repositories.defaultProps = {
 Repositories.propTypes = {
   repositories: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string.isRequired,
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
       name: PropTypes.string.isRequired,
       description: PropTypes.string.isRequired,
       html_url: PropTypes.string.isRequired,

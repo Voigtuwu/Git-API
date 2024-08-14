@@ -54,6 +54,7 @@ export const Data = styled.p`
   display: flex;
   align-items: center;
   line-height: 1.5;
+  text-decoration: none;
 
   svg {
     margin-right: 10px;
